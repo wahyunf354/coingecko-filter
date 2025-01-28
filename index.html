@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="sunset">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CoinGecko Category Filter</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="navbar bg-base-100">
+      <div class="flex-1">
+        <a class="btn btn-ghost text-xl">CoinGecko Category Filter</a>
+      </div>
+    </div>
+    <div class="container mx-6">
+      <div>
+        <select
+          id="select-categories"
+          class="select select-bordered w-full max-w-xs"
+        ></select>
+        <button class="btn btn-primary" id="btn-filter">Filter</button>
+      </div>
+
+      <div id="budge-filter-category" class="mt-4"></div>
+
+      <div class="filters" id="filters">
+        <!-- Filters will be dynamically added here -->
+      </div>
+      <div class="token-list" id="token-list">
+        <!-- Tokens will be displayed here -->
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
