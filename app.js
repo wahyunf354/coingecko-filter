@@ -1,7 +1,8 @@
-const categoriesSelects = [];
+let categoriesSelects = [];
 const btnFilter = document.getElementById("btn-filter");
 const selectCategoryEl = document.getElementById("select-categories");
 const budgeFilterEl = document.getElementById("budge-filter-category");
+const btnReset = document.getElementById("btn-reset");
 
 document.addEventListener("DOMContentLoaded", async () => {
   const categories = await fetchCategories();
@@ -49,6 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   btnFilter.addEventListener("click", handleDisplayIrisanToken);
+  btnReset.addEventListener("click", resetFilter);
 });
 
 function handleRemoveBadge(categoryId) {
@@ -73,6 +75,8 @@ async function handleDisplayIrisanToken() {
   tokenListContainer.innerHTML = `<div class="flex justify-center"><span class="loading loading-bars loading-xs"></span></div>`;
 
   if (categoriesSelects.length <= 0) {
+    setLoadingButtonFilter(false);
+    tokenListContainer.innerHTML = "";
     return;
   }
 
@@ -197,4 +201,25 @@ function setLoadingButtonFilter(isLoading) {
     btnFilter.disabled = false; // Aktifkan tombol setelah selesai loading
     btnFilter.innerHTML = `Filter`;
   }
+}
+
+function resetFilter() {
+  categoriesSelects = [];
+
+  const badgeElements = document.querySelectorAll(".badge");
+  badgeElements.forEach((badge) => {
+    badge.remove();
+  });
+
+  const btnFilter = document.getElementById("btn-filter");
+  if (btnFilter) {
+    btnFilter.disabled = false;
+    btnFilter.innerHTML = "Filter";
+  }
+
+  const tokenListContainer = document.getElementById("token-list");
+
+  tokenListContainer.innerHTML = "";
+
+  console.log("Filter has been reset");
 }
