@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CoinGecko Category Filter</title>
-
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
+    />
     <link
       href="https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css"
       rel="stylesheet"
@@ -31,11 +34,11 @@
 
       <div id="budge-filter-category" class="mt-4"></div>
 
-      <div class="token-list" id="token-list">
-        <!-- Tokens will be displayed here -->
-      </div>
+      <div id="table-token" class="table-token table w-full py-3"></div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

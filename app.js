@@ -1,4 +1,5 @@
 let categoriesSelects = [];
+const tokenListContainer = document.getElementById("table-token");
 const btnFilter = document.getElementById("btn-filter");
 const selectCategoryEl = document.getElementById("select-categories");
 const budgeFilterEl = document.getElementById("budge-filter-category");
@@ -13,7 +14,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     option.dataset;
     option.textContent = category.name;
     option.dataset.description = category.name;
-
     selectCategoryEl.appendChild(option);
   });
 
@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 		${selectedOption.dataset.description}`;
 
     categoriesSelects.push(selectedOption.value);
-
     budgeFilterEl.appendChild(badgeEl);
   });
 
@@ -69,7 +68,6 @@ function handleRemoveBadge(categoryId) {
 }
 
 async function handleDisplayIrisanToken() {
-  const tokenListContainer = document.getElementById("token-list");
   setLoadingButtonFilter(true);
 
   tokenListContainer.innerHTML = `<div class="flex justify-center"><span class="loading loading-bars loading-xs"></span></div>`;
@@ -145,16 +143,17 @@ async function fetchTokensByCategory(categoryId) {
 }
 
 function displayTokens(tokens) {
-  const tokenListContainer = document.getElementById("token-list");
   tokenListContainer.innerHTML = "";
   const table = document.createElement("table");
   table.className = "table w-full";
+  table.id = "tokenTable";
   table.innerHTML = `
     <thead>
       <tr>
         <th></th>
         <th>Name</th>
         <th>Symbol</th>
+        <th>24h</th>
         <th>Price</th>
         <th>Market Cap</th>
       </tr>
@@ -174,6 +173,9 @@ function displayTokens(tokens) {
         <span>${token.name}</span>
       </td>
       <td>${token.symbol.toUpperCase()}</td>
+      <td>$${
+        token.price_change_24h ? token.price_change_24h.toFixed(2) : "-"
+      }</td>
       <td>$${token.current_price.toFixed(2)}</td>
       <td>$${token.market_cap.toLocaleString()}</td>
     `;
@@ -182,6 +184,17 @@ function displayTokens(tokens) {
   });
 
   tokenListContainer.appendChild(table);
+
+  // **Inisialisasi DataTables setelah tabel ditambahkan ke DOM**
+  setTimeout(() => {
+    $("#tokenTable").DataTable({
+      responsive: true,
+      paging: true,
+      searching: false,
+      ordering: true,
+      info: true,
+    });
+  }, 500);
 }
 
 function setLoadingButtonFilter(isLoading) {
@@ -216,8 +229,6 @@ function resetFilter() {
     btnFilter.disabled = false;
     btnFilter.innerHTML = "Filter";
   }
-
-  const tokenListContainer = document.getElementById("token-list");
 
   tokenListContainer.innerHTML = "";
 
