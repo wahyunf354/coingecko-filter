@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="sunset">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,10 @@
       rel="stylesheet"
       type="text/css"
     />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tom-select@2.4.2/dist/css/tom-select.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
@@ -22,12 +26,23 @@
       </div>
     </div>
     <div class="container mx-6">
-      <div>
-        <select
-          id="select-categories"
-          class="select select-bordered w-full max-w-xs mr-2"
-          placeholder="Category"
-        ></select>
+      <div class="flex gap-2">
+        <div class="dropdown relative">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Select an option"
+            onfocus="showDropdown()"
+            oninput="filterOptions()"
+            class="input input-bordered w-full max-w-xs"
+            autocomplete="off"
+          />
+          <ul
+            id="dropdownList"
+            class="cursor-pointer absolute menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+          ></ul>
+        </div>
+
         <button class="btn btn-primary" id="btn-filter">Filter</button>
         <button class="btn btn-secondary" id="btn-reset">Reset</button>
       </div>
@@ -37,8 +52,36 @@
       <div id="table-token" class="table-token table w-full py-3"></div>
     </div>
 
+    <script>
+      function showDropdown() {
+        document.getElementById("dropdownList").style.display = "block";
+      }
+
+      function filterOptions() {
+        let input = document.getElementById("searchInput").value.toLowerCase();
+        let ul = document.getElementById("dropdownList");
+        let items = ul.getElementsByTagName("li");
+
+        for (let i = 0; i < items.length; i++) {
+          let text = items[i].textContent || items[i].innerText;
+          items[i].style.display = text.toLowerCase().includes(input)
+            ? ""
+            : "none";
+        }
+      }
+
+      // Hide dropdown when clicking outside
+      document.addEventListener("click", function (event) {
+        let dropdown = document.querySelector(".dropdown");
+        if (!dropdown.contains(event.target)) {
+          document.getElementById("dropdownList").style.display = "none";
+        }
+      });
+    </script>
+
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.2/dist/js/tom-select.complete.min.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
