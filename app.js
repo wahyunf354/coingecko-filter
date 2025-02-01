@@ -8,7 +8,16 @@ const btnReset = document.getElementById("btn-reset");
 const ulDropdownCategoryElement = document.getElementById("dropdownList");
 const inputSelectCategoyElement = document.getElementById("searchInput");
 
+// Hide dropdown when clicking outside
+document.addEventListener("click", function (event) {
+  let dropdown = document.querySelector(".dropdown");
+  if (!dropdown.contains(event.target)) {
+    document.getElementById("dropdownList").style.display = "none";
+  }
+});
+
 document.addEventListener("DOMContentLoaded", async () => {
+  ulDropdownCategoryElement.style.display = "none";
   const categories = await fetchCategories();
 
   categories.forEach((category) => {
@@ -22,10 +31,25 @@ document.addEventListener("DOMContentLoaded", async () => {
   btnReset.addEventListener("click", resetFilter);
 });
 
+function showDropdown() {
+  ulDropdownCategoryElement.style.display = "block";
+}
+
+function filterOptions() {
+  let input = document.getElementById("searchInput").value.toLowerCase();
+  let ul = document.getElementById("dropdownList");
+  let items = ul.getElementsByTagName("li");
+
+  for (let i = 0; i < items.length; i++) {
+    let text = items[i].textContent || items[i].innerText;
+    items[i].style.display = text.toLowerCase().includes(input) ? "" : "none";
+  }
+}
+
 function selectOption(value, id) {
   console.log("Value", value);
   inputSelectCategoyElement.value = value;
-  document.getElementById("dropdownList").style.display = "none";
+  ulDropdownCategoryElement.style.display = "none";
   handleChangeInputSelectOption(value, id);
 }
 

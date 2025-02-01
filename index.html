@@ -52,33 +52,6 @@
       <div id="table-token" class="table-token table w-full py-3"></div>
     </div>
 
-    <script>
-      function showDropdown() {
-        document.getElementById("dropdownList").style.display = "block";
-      }
-
-      function filterOptions() {
-        let input = document.getElementById("searchInput").value.toLowerCase();
-        let ul = document.getElementById("dropdownList");
-        let items = ul.getElementsByTagName("li");
-
-        for (let i = 0; i < items.length; i++) {
-          let text = items[i].textContent || items[i].innerText;
-          items[i].style.display = text.toLowerCase().includes(input)
-            ? ""
-            : "none";
-        }
-      }
-
-      // Hide dropdown when clicking outside
-      document.addEventListener("click", function (event) {
-        let dropdown = document.querySelector(".dropdown");
-        if (!dropdown.contains(event.target)) {
-          document.getElementById("dropdownList").style.display = "none";
-        }
-      });
-    </script>
-
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.2/dist/js/tom-select.complete.min.js"></script>
